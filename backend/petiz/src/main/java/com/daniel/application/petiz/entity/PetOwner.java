@@ -19,60 +19,80 @@ public class PetOwner {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
-	
+
 	@Column(name="name")
 	private String name;
-	
+
 	@Column(name="telephone_number")
 	private int telephoneNumber;
-	
-	@OneToMany(
-	        mappedBy = "petOwner",
-	        cascade = CascadeType.ALL
-	    )
-	@Column(name="pet_name")
-	private List<Pet> Pet = new ArrayList<Pet>();
-	
+
+	@OneToMany(mappedBy = "petOwner",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	private List<Pet> pet = new ArrayList<Pet>();
+
+	@OneToMany(mappedBy="petOwnerId",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@Column(name="booking")
+	private List<Booking> bookingList = new ArrayList<>();
+
+
 	public PetOwner () {}
 
-	public PetOwner(Integer id, String name, int telephone_number, List<Pet> pet) {
-		super();
+
+	public PetOwner(Integer id, String name, int telephoneNumber, List<Pet> pet, List<Booking> bookingList) {
 		this.id = id;
 		this.name = name;
-		this.telephoneNumber = telephone_number;
-		Pet = pet;
+		this.telephoneNumber = telephoneNumber;
+		this.pet = pet;
+		this.bookingList = bookingList;
 	}
+
 
 	public Integer getId() {
 		return id;
 	}
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getTelephone_number() {
+
+	public int getTelephoneNumber() {
 		return telephoneNumber;
 	}
 
-	public void setTelephone_number(int telephone_number) {
-		this.telephoneNumber = telephone_number;
+
+	public void setTelephoneNumber(int telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
 	}
+
 
 	public List<Pet> getPet() {
-		return Pet;
+		return pet;
 	}
 
+
 	public void setPet(List<Pet> pet) {
-		Pet = pet;
+		this.pet = pet;
 	}
-	
+
+
+	public List<Booking> getBookingList() {
+		return bookingList;
+	}
+
+
+	public void setBookingList(List<Booking> bookingList) {
+		this.bookingList = bookingList;
+	}
+
 }

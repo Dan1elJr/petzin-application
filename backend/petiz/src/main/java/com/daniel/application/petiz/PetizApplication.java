@@ -1,12 +1,16 @@
 package com.daniel.application.petiz;
 
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.daniel.application.petiz.entity.Booking;
 import com.daniel.application.petiz.entity.Pet;
 import com.daniel.application.petiz.entity.PetOwner;
+import com.daniel.application.petiz.repository.BookingRepository;
 import com.daniel.application.petiz.repository.PetOwnerRepository;
 
 @SpringBootApplication
@@ -19,14 +23,14 @@ public class PetizApplication {
 
 @Bean
 public CommandLineRunner run(
-        PetOwnerRepository petOwnerRepository) {
+        PetOwnerRepository petOwnerRepository, BookingRepository bookingRepository) {
 
     return args -> {
 
         // Criando o proprietário
         PetOwner owner = new PetOwner();
         owner.setName("João Silva");
-        owner.setTelephone_number(994371301);
+        owner.setTelephoneNumber(994371301);
 
         // Criando o animal
         Pet pet = new Pet();
@@ -44,6 +48,16 @@ public CommandLineRunner run(
         System.out.println(
             "Proprietário e animal cadastrados!"
         );
+        
+        Booking booking = new Booking();
+        booking.setPet(pet);
+        booking.setPetOwnerId(owner);
+        booking.setPetCheckinDate(LocalDate.now());
+        booking.setPetCheckoutDate(LocalDate.now().plusDays(1));
+        
+        bookingRepository.save(booking);
+        
+        
     };
 }
 
