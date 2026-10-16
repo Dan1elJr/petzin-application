@@ -16,7 +16,8 @@ public record BookingDTO(
         @NotNull @Positive Integer petId,
         @NotNull LocalDate petCheckinDate,
         @NotNull LocalDate petCheckoutDate,
-        @DecimalMin("0.00") BigDecimal bookingCost
+        @DecimalMin("0.00") BigDecimal bookingCost,
+        Integer kannel
 ) {
     @AssertTrue(message = "A data de checkout deve ser posterior à data de checkin.")
     @JsonIgnore

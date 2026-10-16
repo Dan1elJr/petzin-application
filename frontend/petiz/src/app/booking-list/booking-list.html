@@ -1,0 +1,50 @@
+<h1 class="h3">Agendamentos</h1>
+<a routerLink="/bookings/new" class="btn btn-primary mb-3">Novo agendamento</a>
+<p *ngIf="error" class="text-danger" role="alert">{{ error }}</p>
+<p *ngIf="loading">Carregando...</p>
+<button *ngIf="error && !loading" class="btn btn-secondary mb-3" (click)="load()">
+  Atualizar lista
+</button>
+<div *ngIf="!loading">
+  <label for="search" class="form-label">Pesquisar</label
+  ><input id="search" class="form-control mb-3" [(ngModel)]="query" />
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Animal / tutor</th>
+          <th scope="col">Entrada</th>
+          <th scope="col">Saída</th>
+          <th scope="col">Valor pago</th>
+          <th scope="col">Canil</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of filtered()">
+          <td>{{ petName(booking.petId) }} / {{ ownerName(booking) }}</td>
+          <td>{{ booking.petCheckinDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ booking.petCheckoutDate | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            {{
+              booking.bookingCost == null
+                ? 'Não informado'
+                : (booking.bookingCost | currency: 'BRL')
+            }}
+          </td>
+          <td>{{ booking.kannel ?? 'Não informado' }}</td>
+          <td>
+            <a [routerLink]="['/bookings', booking.id]" class="btn btn-sm btn-secondary me-2"
+              >Editar</a
+            ><button class="btn btn-sm btn-danger" [disabled]="busy" (click)="remove(booking)">
+              Excluir
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!filtered().length">
+          <td colspan="6">Nenhum registro encontrado.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

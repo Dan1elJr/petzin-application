@@ -1,0 +1,118 @@
+<h1 class="h3">Agendamento</h1>
+<p *ngIf="error" class="text-danger" role="alert">{{ error }}</p>
+<p *ngIf="loading">Carregando...</p>
+<fieldset [disabled]="busy">
+  <div class="mb-3">
+    <label class="me-3"
+      ><input
+        id="existingOwner"
+        type="radio"
+        name="mode"
+        value="existing"
+        [(ngModel)]="mode"
+        (ngModelChange)="clearOwner()"
+      />
+      Tutor cadastrado</label
+    >
+    <label
+      ><input
+        id="newOwner"
+        type="radio"
+        name="mode"
+        value="new"
+        [(ngModel)]="mode"
+        (ngModelChange)="clearOwner()"
+      />
+      Tutor não cadastrado</label
+    >
+  </div>
+  <div *ngIf="mode === 'existing'" class="mb-3">
+    <label for="searchOwner" class="form-label">Pesquisar tutor</label>
+    <input
+      id="searchOwner"
+      class="form-control"
+      [(ngModel)]="query"
+      (ngModelChange)="clearOwner()"
+      placeholder="Nome, telefone ou código"
+    />
+    <div *ngIf="!selectedOwner">
+      <p *ngFor="let owner of matches()">
+        {{ owner.name }} · {{ owner.telephoneNumber }}
+        <button type="button" class="btn btn-sm btn-secondary" (click)="loadOwner(owner.id!)">
+          Validar tutor
+        </button>
+      </p>
+      <p *ngIf="query.trim() && !matches().length">Nenhum tutor encontrado.</p>
+    </div>
+  </div>
+  <app-pet-owner-form *ngIf="mode === 'new' && !selectedOwner" (saved)="ownerSaved($event)" />
+</fieldset>
+<form *ngIf="selectedOwner" #bookingForm="ngForm" (ngSubmit)="bookingForm.valid && save()">
+  <fieldset [disabled]="busy">
+    <p>Tutor: {{ selectedOwner.name }}</p>
+    <label for="bookingPet" class="form-label">Animal</label>
+    <select
+      id="bookingPet"
+      name="petId"
+      class="form-select mb-3"
+      [(ngModel)]="booking.petId"
+      required
+    >
+      <option [ngValue]="null">Selecione</option>
+      <option *ngFor="let pet of pets" [ngValue]="pet.id">{{ pet.petName }}</option>
+    </select>
+    <a *ngIf="!pets.length" [routerLink]="['/owners', selectedOwner.id]"
+      >Adicionar animais ao tutor</a
+    >
+    <div class="row g-3 mb-3">
+      <div class="col-md-3">
+        <label for="checkin" class="form-label">Entrada</label
+        ><input
+          id="checkin"
+          name="petCheckinDate"
+          type="date"
+          class="form-control"
+          [(ngModel)]="booking.petCheckinDate"
+          required
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="checkout" class="form-label">Saída</label
+        ><input
+          id="checkout"
+          name="petCheckoutDate"
+          type="date"
+          class="form-control"
+          [(ngModel)]="booking.petCheckoutDate"
+          required
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="cost" class="form-label">Valor pago (R$)</label
+        ><input
+          id="cost"
+          name="bookingCost"
+          type="number"
+          class="form-control"
+          [(ngModel)]="booking.bookingCost"
+          step="0.01"
+        />
+      </div>
+      <div class="col-md-3">
+        <label for="kannel" class="form-label">Canil</label
+        ><input
+          id="kannel"
+          name="kannel"
+          type="number"
+          class="form-control"
+          [(ngModel)]="booking.kannel"
+          step="1"
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="bookingForm.invalid">
+      {{ busy ? 'Salvando...' : 'Salvar' }}
+    </button>
+    <a routerLink="/bookings" class="btn btn-secondary ms-2" [class.disabled]="busy">Cancelar</a>
+  </fieldset>
+</form>

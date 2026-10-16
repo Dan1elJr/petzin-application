@@ -1,0 +1,39 @@
+<h1 class="h3">Tutores e animais</h1>
+<a routerLink="/owners/new" class="btn btn-primary mb-3">Cadastrar tutor</a>
+<p *ngIf="error" class="text-danger" role="alert">{{ error }}</p>
+<p *ngIf="loading">Carregando...</p>
+<button *ngIf="error && !loading" class="btn btn-secondary mb-3" (click)="load()">
+  Atualizar lista
+</button>
+<div *ngIf="!loading">
+  <label for="search" class="form-label">Pesquisar</label
+  ><input id="search" class="form-control mb-3" [(ngModel)]="query" />
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Tutor</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">Animais</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let owner of filtered()">
+          <td>{{ owner.name }}</td>
+          <td>{{ owner.telephoneNumber }}</td>
+          <td>{{ petNames(owner.id) }}</td>
+          <td>
+            <a [routerLink]="['/owners', owner.id]" class="btn btn-sm btn-secondary me-2">Editar</a
+            ><button class="btn btn-sm btn-danger" [disabled]="busy" (click)="remove(owner)">
+              Excluir
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!filtered().length">
+          <td colspan="4">Nenhum registro encontrado.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

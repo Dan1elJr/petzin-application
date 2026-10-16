@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 public record PetOwnerDTO(
         @Positive Integer id,
         @NotBlank @Size(max = 255) String name,
-        @NotNull @Positive Integer telephoneNumber,
+        @NotBlank String telephoneNumber,
         List<@NotNull @Positive Integer> petIds,
         List<@NotNull @Positive Integer> bookingIds
 ) {

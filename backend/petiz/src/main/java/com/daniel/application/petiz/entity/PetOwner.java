@@ -24,7 +24,7 @@ public class PetOwner {
 	private String name;
 
 	@Column(name="telephone_number")
-	private int telephoneNumber;
+	private String telephoneNumber;
 
 	@OneToMany(mappedBy = "petOwner",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	private List<Pet> pet = new ArrayList<Pet>();
@@ -36,7 +36,8 @@ public class PetOwner {
 	public PetOwner () {}
 
 
-	public PetOwner(Integer id, String name, int telephoneNumber, List<Pet> pet, List<Booking> bookingList) {
+	public PetOwner(Integer id, String name, String telephoneNumber, List<Pet> pet, List<Booking> bookingList) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.telephoneNumber = telephoneNumber;
@@ -65,12 +66,12 @@ public class PetOwner {
 	}
 
 
-	public int getTelephoneNumber() {
+	public String getTelephoneNumber() {
 		return telephoneNumber;
 	}
 
 
-	public void setTelephoneNumber(int telephoneNumber) {
+	public void setTelephoneNumber(String telephoneNumber) {
 		this.telephoneNumber = telephoneNumber;
 	}
 
@@ -94,4 +95,5 @@ public class PetOwner {
 		this.bookingList = bookingList;
 	}
 
+	
 }

@@ -1,0 +1,5 @@
+<h1 class="h3">Cadastro do tutor</h1>
+<p *ngIf="loading">Carregando...</p>
+<p *ngIf="error" class="text-danger" role="alert">{{ error }}</p>
+<app-pet-owner-form *ngIf="!loading && !error" [owner]="owner" [pets]="pets" (saved)="saved()" />
+<a routerLink="/owners" class="d-inline-block mt-3">Voltar</a>

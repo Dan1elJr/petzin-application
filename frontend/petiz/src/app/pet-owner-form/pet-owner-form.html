@@ -1,0 +1,66 @@
+<p *ngIf="error" class="text-danger" role="alert">{{ error }}</p>
+<form #ownerForm="ngForm" (ngSubmit)="ownerForm.valid && save()">
+  <fieldset [disabled]="busy">
+    <div class="mb-3">
+      <label for="ownerName" class="form-label">Nome do tutor</label>
+      <input
+        id="ownerName"
+        name="ownerName"
+        class="form-control"
+        [(ngModel)]="owner.name"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="telephone" class="form-label">Telefone</label>
+      <input
+        id="telephone"
+        name="telephone"
+        type="tel"
+        class="form-control"
+        [(ngModel)]="owner.telephoneNumber"
+        required
+        autocomplete="tel"
+      />
+    </div>
+    <h2 class="h6">Animais do tutor</h2>
+    <button type="button" class="btn btn-outline-secondary mb-3" (click)="addPet()">
+      Adicionar animal
+    </button>
+    <div *ngFor="let pet of pets; let i = index" class="mb-3">
+      <p>
+        Animal {{ i + 1 }}
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePet(i)">
+          Remover
+        </button>
+      </p>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label [for]="'petName' + i" class="form-label">Nome</label>
+          <input
+            [id]="'petName' + i"
+            [name]="'petName' + i"
+            class="form-control"
+            [(ngModel)]="pet.petName"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label [for]="'petBreed' + i" class="form-label">Raça</label>
+          <input
+            [id]="'petBreed' + i"
+            [name]="'petBreed' + i"
+            class="form-control"
+            [(ngModel)]="pet.petBreed"
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <p *ngIf="!pets.length">Nenhum animal adicionado.</p>
+
+    <button type="submit" class="btn btn-primary" [disabled]="ownerForm.invalid">
+      {{ busy ? 'Salvando...' : 'Salvar tutor e animais' }}
+    </button>
+  </fieldset>
+</form>

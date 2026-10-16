@@ -38,6 +38,9 @@ public class Booking {
 	
 	@Column(name = "booking_cost")
 	private BigDecimal bookingCost;
+	
+	@Column(name="kannel")
+	private Integer kannel;
 
 
 	public Integer getId() {
@@ -47,14 +50,15 @@ public class Booking {
 	public Booking() {}
 
 	public Booking(Integer id, PetOwner petOwnerId, Pet pet, LocalDate petCheckinDate, LocalDate petCheckoutDate,
-		BigDecimal bookingCost) {
-		
+			BigDecimal bookingCost, Integer kannel) {
+		super();
 		this.id = id;
 		this.petOwnerId = petOwnerId;
 		this.pet = pet;
 		this.petCheckinDate = petCheckinDate;
 		this.petCheckoutDate = petCheckoutDate;
 		this.bookingCost = bookingCost;
+		this.kannel = kannel;
 	}
 
 	public PetOwner getPetOwnerId() {
@@ -95,6 +99,14 @@ public class Booking {
 
 	public void setBookingCost(BigDecimal bookingCost) {
 		this.bookingCost = bookingCost;
+	}
+
+	public Integer getKannel() {
+		return kannel;
+	}
+
+	public void setKannel(Integer kannel) {
+		this.kannel = kannel;
 	}
 
 	public void setId(Integer id) {

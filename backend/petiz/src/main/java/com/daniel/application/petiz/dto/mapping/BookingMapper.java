@@ -12,7 +12,7 @@ public final class BookingMapper {
         return new BookingDTO(booking.getId(),
                 booking.getPetOwnerId() == null ? null : booking.getPetOwnerId().getId(),
                 booking.getPet() == null ? null : booking.getPet().getId(),
-                booking.getPetCheckinDate(), booking.getPetCheckoutDate(), booking.getBookingCost());
+                booking.getPetCheckinDate(), booking.getPetCheckoutDate(), booking.getBookingCost(), booking.getKannel());
     }
 
     public static Booking toEntity(BookingDTO dto) {
@@ -27,6 +27,6 @@ public final class BookingMapper {
             pet.setId(dto.petId());
         }
         return new Booking(dto.id(), owner, pet, dto.petCheckinDate(),
-                dto.petCheckoutDate(), dto.bookingCost());
+                dto.petCheckoutDate(), dto.bookingCost(), dto.kannel());
     }
 }
