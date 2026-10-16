@@ -12,7 +12,7 @@ import com.daniel.application.petiz.repository.BookingRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-@Transactional(readOnly = true)
+
 public class BookingService {
 
     private final BookingRepository bookingRepository;
@@ -33,10 +33,6 @@ public class BookingService {
 
     @Transactional
     public Booking save(Booking booking) {
-     
-        if (booking.getId() != null) {
-            findById(booking.getId());
-        }
 
         return bookingRepository.save(booking);
     }

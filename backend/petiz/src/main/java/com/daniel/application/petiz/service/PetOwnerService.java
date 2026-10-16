@@ -12,7 +12,7 @@ import com.daniel.application.petiz.repository.PetOwnerRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-@Transactional(readOnly = true)
+
 public class PetOwnerService {
 
     private final PetOwnerRepository petOwnerRepository;
