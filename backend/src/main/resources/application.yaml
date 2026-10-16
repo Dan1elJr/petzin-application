@@ -4,12 +4,12 @@ spring:
     name: petzin
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/petiz_desenvolvimento
+    url: jdbc:postgresql://localhost:5432/petzin_webservice
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
     hikari:
-      pool-name: PetzinPoola
+      pool-name: petzinpoll
       maximum-pool-size: 10
       minimum-idle: 2
 

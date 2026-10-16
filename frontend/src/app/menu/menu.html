@@ -1,9 +1,12 @@
-<nav class="container py-3 border-bottom" aria-label="Menu principal">
-  <a routerLink="/" class="me-3">Petzin</a>
-  <a routerLink="/bookings" routerLinkActive="fw-bold" ariaCurrentWhenActive="page" class="me-3"
+<nav class="container d-flex flex-wrap align-items-center gap-3 py-3 border-bottom" aria-label="Menu principal">
+  <a routerLink="/">Petzin</a>
+  <a routerLink="/bookings" routerLinkActive="fw-bold" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page"
     >Agendamentos</a
   >
+  <a routerLink="/bookings/new" routerLinkActive="fw-bold" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page"
+    >Agendar</a
+  >
   <a routerLink="/owners" routerLinkActive="fw-bold" ariaCurrentWhenActive="page"
-    >Tutores e animais</a
+    >Cadastro de tutores e animais</a
   >
 </nav>
