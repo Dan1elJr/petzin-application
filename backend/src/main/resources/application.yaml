@@ -1,0 +1,27 @@
+
+spring:
+  application:
+    name: petzin
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petiz_desenvolvimento
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: PetzinPoola
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger
+    operations-sorter: alpha
+    tags-sorter: alpha
