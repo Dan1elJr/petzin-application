@@ -18,7 +18,10 @@ public record BookingDTO(
 ) {
     @AssertTrue(message = "A data de checkout deve ser posterior à data de checkin.")
     public boolean isCheckoutAfterCheckin() {
-        return petCheckinDate == null || petCheckoutDate == null
-                || petCheckoutDate.isAfter(petCheckinDate);
+        if (petCheckinDate == null || petCheckoutDate == null) {
+            return true;
+        }
+
+        return petCheckoutDate.isAfter(petCheckinDate);
     }
 }

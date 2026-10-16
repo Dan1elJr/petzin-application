@@ -1,7 +1,8 @@
 package com.daniel.application.petiz.repository;
 
-public interface PetRepository {
-	
-	
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.daniel.application.petiz.entity.Pet;
+
+public interface PetRepository extends JpaRepository<Pet, Integer> {
 }

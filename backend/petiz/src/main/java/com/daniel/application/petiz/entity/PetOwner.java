@@ -30,7 +30,6 @@ public class PetOwner {
 	private List<Pet> pet = new ArrayList<Pet>();
 
 	@OneToMany(mappedBy="petOwnerId",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-	@Column(name="booking")
 	private List<Booking> bookingList = new ArrayList<>();
 
 
