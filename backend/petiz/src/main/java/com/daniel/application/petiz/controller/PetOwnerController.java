@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daniel.application.petiz.dto.PetOwnerDTO;
-import com.daniel.application.petiz.dto.mapping.PetOwnerMapper;
-import com.daniel.application.petiz.entity.PetOwner;
 import com.daniel.application.petiz.service.PetOwnerService;
 
 import jakarta.validation.Valid;
@@ -34,26 +32,22 @@ public class PetOwnerController {
 
     @GetMapping
     public ResponseEntity<List<PetOwnerDTO>> findAll() {
-        return ResponseEntity.ok(petOwnerService.findAll().stream().map(PetOwnerMapper::toDTO).toList());
+        return ResponseEntity.ok(petOwnerService.findAllDTO());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PetOwnerDTO> findById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(PetOwnerMapper.toDTO(petOwnerService.findById(id)));
+        return ResponseEntity.ok(petOwnerService.findByIdDTO(id));
     }
 
     @PostMapping
     public ResponseEntity<PetOwnerDTO> create(@Valid @RequestBody PetOwnerDTO dto) {
-        PetOwner petOwner = PetOwnerMapper.toEntity(dto);
-        petOwner.setId(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PetOwnerMapper.toDTO(petOwnerService.save(petOwner)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(petOwnerService.create(dto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PetOwnerDTO> update(@PathVariable("id") Integer id, @Valid @RequestBody PetOwnerDTO dto) {
-        PetOwner petOwner = PetOwnerMapper.toEntity(dto);
-        petOwner.setId(id);
-        return ResponseEntity.ok(PetOwnerMapper.toDTO(petOwnerService.save(petOwner)));
+        return ResponseEntity.ok(petOwnerService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")

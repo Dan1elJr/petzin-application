@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.daniel.application.petiz.dto.PetOwnerDTO;
+import com.daniel.application.petiz.dto.mapping.PetOwnerMapper;
 import com.daniel.application.petiz.entity.PetOwner;
 import com.daniel.application.petiz.entity.Pet;
 import com.daniel.application.petiz.entity.Booking;
 import com.daniel.application.petiz.repository.PetOwnerRepository;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.daniel.application.petiz.service.exception.PetOwnerNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -31,17 +33,36 @@ public class PetOwnerService {
         this.petOwnerRepository = petOwnerRepository;
     }
 
-    public List<PetOwner> findAll() {
-        return petOwnerRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<PetOwnerDTO> findAllDTO() {
+        return petOwnerRepository.findAll().stream().map(PetOwnerMapper::toDTO).toList();
     }
 
-    public PetOwner findById(Integer id) {
-        return petOwnerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tutor não encontrado: " + id));
+    @Transactional(readOnly = true)
+    public PetOwnerDTO findByIdDTO(Integer id) {
+        return PetOwnerMapper.toDTO(findById(id));
     }
 
     @Transactional
-    public PetOwner save(PetOwner petOwner) {
+    public PetOwnerDTO create(PetOwnerDTO dto) {
+        PetOwner petOwner = PetOwnerMapper.toEntity(dto);
+        petOwner.setId(null);
+        return PetOwnerMapper.toDTO(save(petOwner));
+    }
+
+    @Transactional
+    public PetOwnerDTO update(Integer id, PetOwnerDTO dto) {
+        PetOwner petOwner = PetOwnerMapper.toEntity(dto);
+        petOwner.setId(id);
+        return PetOwnerMapper.toDTO(save(petOwner));
+    }
+
+    private PetOwner findById(Integer id) {
+        return petOwnerRepository.findById(id)
+                .orElseThrow(() -> new PetOwnerNotFoundException(id));
+    }
+
+    private PetOwner save(PetOwner petOwner) {
         if (petOwner.getId() != null) {
             findById(petOwner.getId());
         }

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daniel.application.petiz.dto.BookingDTO;
-import com.daniel.application.petiz.dto.mapping.BookingMapper;
-import com.daniel.application.petiz.entity.Booking;
 import com.daniel.application.petiz.service.BookingService;
 
 import jakarta.validation.Valid;
@@ -34,26 +32,22 @@ public class BookingController {
 
     @GetMapping
     public ResponseEntity<List<BookingDTO>> findAll() {
-        return ResponseEntity.ok(bookingService.findAll().stream().map(BookingMapper::toDTO).toList());
+        return ResponseEntity.ok(bookingService.findAllDTO());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookingDTO> findById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(BookingMapper.toDTO(bookingService.findById(id)));
+        return ResponseEntity.ok(bookingService.findByIdDTO(id));
     }
 
     @PostMapping
     public ResponseEntity<BookingDTO> create(@Valid @RequestBody BookingDTO dto) {
-        Booking booking = BookingMapper.toEntity(dto);
-        booking.setId(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(BookingMapper.toDTO(bookingService.save(booking)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.create(dto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookingDTO> update(@PathVariable("id") Integer id, @Valid @RequestBody BookingDTO dto) {
-        Booking booking = BookingMapper.toEntity(dto);
-        booking.setId(id);
-        return ResponseEntity.ok(BookingMapper.toDTO(bookingService.save(booking)));
+        return ResponseEntity.ok(bookingService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")

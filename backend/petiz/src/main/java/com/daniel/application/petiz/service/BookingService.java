@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.daniel.application.petiz.dto.BookingDTO;
+import com.daniel.application.petiz.dto.mapping.BookingMapper;
 import com.daniel.application.petiz.entity.Booking;
 import com.daniel.application.petiz.repository.BookingRepository;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.daniel.application.petiz.service.exception.BookingNotFoundException;
 
 @Service
 
@@ -22,19 +24,34 @@ public class BookingService {
         this.bookingRepository = bookingRepository;
     }
 
-    public List<Booking> findAll() {
-        return bookingRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<BookingDTO> findAllDTO() {
+        return bookingRepository.findAll().stream().map(BookingMapper::toDTO).toList();
     }
 
-    public Booking findById(Integer id) {
-        return bookingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Reserva não encontrada: " + id));
+    @Transactional(readOnly = true)
+    public BookingDTO findByIdDTO(Integer id) {
+        return BookingMapper.toDTO(findById(id));
     }
 
     @Transactional
-    public Booking save(Booking booking) {
+    public BookingDTO create(BookingDTO dto) {
+        Booking booking = BookingMapper.toEntity(dto);
+        booking.setId(null);
+        return BookingMapper.toDTO(bookingRepository.save(booking));
+    }
 
-        return bookingRepository.save(booking);
+    @Transactional
+    public BookingDTO update(Integer id, BookingDTO dto) {
+        findById(id);
+        Booking booking = BookingMapper.toEntity(dto);
+        booking.setId(id);
+        return BookingMapper.toDTO(bookingRepository.save(booking));
+    }
+
+    private Booking findById(Integer id) {
+        return bookingRepository.findById(id)
+                .orElseThrow(() -> new BookingNotFoundException(id));
     }
 
     @Transactional

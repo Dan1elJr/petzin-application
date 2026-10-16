@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daniel.application.petiz.dto.PetDTO;
-import com.daniel.application.petiz.dto.mapping.PetMapper;
-import com.daniel.application.petiz.entity.Pet;
 import com.daniel.application.petiz.service.PetService;
 
 import jakarta.validation.Valid;
@@ -34,26 +32,22 @@ public class PetController {
 
     @GetMapping
     public ResponseEntity<List<PetDTO>> findAll() {
-        return ResponseEntity.ok(petService.findAll().stream().map(PetMapper::toDTO).toList());
+        return ResponseEntity.ok(petService.findAllDTO());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PetDTO> findById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(PetMapper.toDTO(petService.findById(id)));
+        return ResponseEntity.ok(petService.findByIdDTO(id));
     }
 
     @PostMapping
     public ResponseEntity<PetDTO> create(@Valid @RequestBody PetDTO dto) {
-        Pet pet = PetMapper.toEntity(dto);
-        pet.setId(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PetMapper.toDTO(petService.save(pet)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(petService.create(dto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PetDTO> update(@PathVariable("id") Integer id, @Valid @RequestBody PetDTO dto) {
-        Pet pet = PetMapper.toEntity(dto);
-        pet.setId(id);
-        return ResponseEntity.ok(PetMapper.toDTO(petService.save(pet)));
+        return ResponseEntity.ok(petService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
