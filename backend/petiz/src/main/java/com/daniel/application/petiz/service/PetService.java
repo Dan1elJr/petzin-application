@@ -23,12 +23,12 @@ public class PetService {
         this.petRepository = petRepository;
     }
 
-    @Transactional(readOnly = true)
+   
     public List<PetDTO> findAllDTO() {
         return petRepository.findAll().stream().map(PetMapper::toDTO).toList();
     }
 
-    @Transactional(readOnly = true)
+   
     public PetDTO findByIdDTO(Integer id) {
         return PetMapper.toDTO(findById(id));
     }

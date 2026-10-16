@@ -33,12 +33,12 @@ public class PetOwnerService {
         this.petOwnerRepository = petOwnerRepository;
     }
 
-    @Transactional(readOnly = true)
+   
     public List<PetOwnerDTO> findAllDTO() {
         return petOwnerRepository.findAll().stream().map(PetOwnerMapper::toDTO).toList();
     }
 
-    @Transactional(readOnly = true)
+    
     public PetOwnerDTO findByIdDTO(Integer id) {
         return PetOwnerMapper.toDTO(findById(id));
     }
@@ -72,6 +72,7 @@ public class PetOwnerService {
             reference.setPetOwner(petOwner);
             return reference;
         }).collect(Collectors.toCollection(ArrayList::new)));
+        
         petOwner.setBookingList(petOwner.getBookingList().stream().map(booking -> {
             Booking reference = entityManager.getReference(Booking.class, booking.getId());
             reference.setPetOwnerId(petOwner);
