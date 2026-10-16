@@ -1,6 +1,7 @@
 package com.daniel.application.petiz.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -9,8 +10,21 @@ import org.junit.jupiter.api.Test;
 
 import jakarta.validation.Validation;
 import jakarta.validation.constraints.NotNull;
+import tools.jackson.databind.json.JsonMapper;
 
 class BookingDTOTests {
+
+    @Test
+    void dateValidationIsNotExposedInJson() throws Exception {
+        LocalDate checkin = LocalDate.of(2026, 11, 1);
+        BookingDTO booking = new BookingDTO(1, 1, 1, checkin, checkin.plusDays(1), null);
+        var mapper = JsonMapper.builder().build();
+        var json = mapper.readTree(mapper.writeValueAsString(booking));
+
+        assertFalse(json.has("checkoutAfterCheckin"));
+        assertTrue(json.has("petCheckinDate"));
+        assertTrue(json.has("petCheckoutDate"));
+    }
 
     @Test
     void missingDatesProduceNotNullViolationsWithoutThrowing() {

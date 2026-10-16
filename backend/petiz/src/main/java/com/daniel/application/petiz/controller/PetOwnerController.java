@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.daniel.application.petiz.dto.PetOwnerDTO;
+import com.daniel.application.petiz.dto.mapping.PetOwnerMapper;
 import com.daniel.application.petiz.entity.PetOwner;
 import com.daniel.application.petiz.service.PetOwnerService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/pet-owners")
+@RequestMapping("api/owners")
 public class PetOwnerController {
 
     private final PetOwnerService petOwnerService;
@@ -29,25 +33,27 @@ public class PetOwnerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PetOwner>> findAll() {
-        return ResponseEntity.ok(petOwnerService.findAll());
+    public ResponseEntity<List<PetOwnerDTO>> findAll() {
+        return ResponseEntity.ok(petOwnerService.findAll().stream().map(PetOwnerMapper::toDTO).toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PetOwner> findById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(petOwnerService.findById(id));
+    public ResponseEntity<PetOwnerDTO> findById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(PetOwnerMapper.toDTO(petOwnerService.findById(id)));
     }
 
     @PostMapping
-    public ResponseEntity<PetOwner> create(@RequestBody PetOwner petOwner) {
+    public ResponseEntity<PetOwnerDTO> create(@Valid @RequestBody PetOwnerDTO dto) {
+        PetOwner petOwner = PetOwnerMapper.toEntity(dto);
         petOwner.setId(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(petOwnerService.save(petOwner));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PetOwnerMapper.toDTO(petOwnerService.save(petOwner)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PetOwner> update(@PathVariable("id") Integer id, @RequestBody PetOwner petOwner) {
+    public ResponseEntity<PetOwnerDTO> update(@PathVariable("id") Integer id, @Valid @RequestBody PetOwnerDTO dto) {
+        PetOwner petOwner = PetOwnerMapper.toEntity(dto);
         petOwner.setId(id);
-        return ResponseEntity.ok(petOwnerService.save(petOwner));
+        return ResponseEntity.ok(PetOwnerMapper.toDTO(petOwnerService.save(petOwner)));
     }
 
     @DeleteMapping("/{id}")

@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.daniel.application.petiz.dto.PetDTO;
+import com.daniel.application.petiz.dto.mapping.PetMapper;
 import com.daniel.application.petiz.entity.Pet;
 import com.daniel.application.petiz.service.PetService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/pets")
+@RequestMapping("api/pets")
 public class PetController {
 
     private final PetService petService;
@@ -29,25 +33,27 @@ public class PetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Pet>> findAll() {
-        return ResponseEntity.ok(petService.findAll());
+    public ResponseEntity<List<PetDTO>> findAll() {
+        return ResponseEntity.ok(petService.findAll().stream().map(PetMapper::toDTO).toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pet> findById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(petService.findById(id));
+    public ResponseEntity<PetDTO> findById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(PetMapper.toDTO(petService.findById(id)));
     }
 
     @PostMapping
-    public ResponseEntity<Pet> create(@RequestBody Pet pet) {
+    public ResponseEntity<PetDTO> create(@Valid @RequestBody PetDTO dto) {
+        Pet pet = PetMapper.toEntity(dto);
         pet.setId(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(petService.save(pet));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PetMapper.toDTO(petService.save(pet)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pet> update(@PathVariable("id") Integer id, @RequestBody Pet pet) {
+    public ResponseEntity<PetDTO> update(@PathVariable("id") Integer id, @Valid @RequestBody PetDTO dto) {
+        Pet pet = PetMapper.toEntity(dto);
         pet.setId(id);
-        return ResponseEntity.ok(petService.save(pet));
+        return ResponseEntity.ok(PetMapper.toDTO(petService.save(pet)));
     }
 
     @DeleteMapping("/{id}")

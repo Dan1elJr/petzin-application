@@ -3,6 +3,8 @@ package com.daniel.application.petiz.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +19,7 @@ public record BookingDTO(
         @DecimalMin("0.00") BigDecimal bookingCost
 ) {
     @AssertTrue(message = "A data de checkout deve ser posterior à data de checkin.")
+    @JsonIgnore
     public boolean isCheckoutAfterCheckin() {
         if (petCheckinDate == null || petCheckoutDate == null) {
             return true;
