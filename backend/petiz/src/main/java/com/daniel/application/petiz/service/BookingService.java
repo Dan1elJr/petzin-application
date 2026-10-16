@@ -2,6 +2,7 @@ package com.daniel.application.petiz.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,8 @@ import jakarta.persistence.EntityNotFoundException;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
-
+	
+    @Autowired
     public BookingService(BookingRepository bookingRepository) {
         this.bookingRepository = bookingRepository;
     }
