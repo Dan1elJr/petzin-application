@@ -1,11 +1,11 @@
-﻿# Petiz — Frontend
+# Petzin — Frontend
 
 Frontend Angular com Bootstrap básico, sem CSS personalizado ou elementos decorativos, para um CRUD simples de tutores, animais e agendamentos. A organização segue o projeto D:\developer-work-space\application: cada componente em sua pasta, navegação por rotas e serviços HTTP separados.
 
 ## Executar
 
 ```powershell
-cd D:\instituto-conecthus\frontend\petiz
+cd D:\instituto-conecthus\frontend
 npm.cmd ci
 npm.cmd start
 ```
@@ -17,7 +17,7 @@ npm.cmd run build
 npm.cmd test -- --watch=false
 ```
 
-O build é gerado em dist/petiz/browser.
+O build é gerado em dist/petzin/browser.
 
 ## Responsabilidades
 

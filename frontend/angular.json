@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "petiz": {
+    "petzin": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -59,10 +59,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "petiz:build:production"
+              "buildTarget": "petzin:build:production"
             },
             "development": {
-              "buildTarget": "petiz:build:development"
+              "buildTarget": "petzin:build:development"
             }
           },
           "defaultConfiguration": "development"
