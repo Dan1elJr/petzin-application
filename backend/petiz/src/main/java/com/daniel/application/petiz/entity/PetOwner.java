@@ -13,7 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="client")
+@Table(name="pet_owner")
 public class PetOwner {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package com.daniel.application.petiz;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
@@ -54,6 +55,7 @@ public CommandLineRunner run(
         booking.setPetOwnerId(owner);
         booking.setPetCheckinDate(LocalDate.now());
         booking.setPetCheckoutDate(LocalDate.now().plusDays(1));
+        booking.setBookingCost(BigDecimal.valueOf(10000));
         
         bookingRepository.save(booking);
         

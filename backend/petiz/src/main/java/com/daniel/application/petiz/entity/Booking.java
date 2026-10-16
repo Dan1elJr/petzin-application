@@ -1,5 +1,6 @@
 package com.daniel.application.petiz.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -34,6 +35,9 @@ public class Booking {
 
 	@Column(name = "checkout_date", nullable = false)
 	private LocalDate petCheckoutDate;
+	
+	@Column(name = "booking_cost")
+	private BigDecimal bookingCost;
 
 
 	public Integer getId() {
@@ -42,57 +46,59 @@ public class Booking {
 	
 	public Booking() {}
 
-	public Booking(Integer id, PetOwner petOwnerId, Pet pet, LocalDate petCheckinDate, LocalDate petCheckoutDate) {
+	public Booking(Integer id, PetOwner petOwnerId, Pet pet, LocalDate petCheckinDate, LocalDate petCheckoutDate,
+		BigDecimal bookingCost) {
+		
 		this.id = id;
 		this.petOwnerId = petOwnerId;
 		this.pet = pet;
 		this.petCheckinDate = petCheckinDate;
 		this.petCheckoutDate = petCheckoutDate;
+		this.bookingCost = bookingCost;
 	}
-
 
 	public PetOwner getPetOwnerId() {
 		return petOwnerId;
 	}
 
-
 	public void setPetOwnerId(PetOwner petOwnerId) {
 		this.petOwnerId = petOwnerId;
 	}
-
 
 	public Pet getPet() {
 		return pet;
 	}
 
-
 	public void setPet(Pet pet) {
 		this.pet = pet;
 	}
-
 
 	public LocalDate getPetCheckinDate() {
 		return petCheckinDate;
 	}
 
-
 	public void setPetCheckinDate(LocalDate petCheckinDate) {
 		this.petCheckinDate = petCheckinDate;
 	}
-
 
 	public LocalDate getPetCheckoutDate() {
 		return petCheckoutDate;
 	}
 
-
 	public void setPetCheckoutDate(LocalDate petCheckoutDate) {
 		this.petCheckoutDate = petCheckoutDate;
 	}
 
+	public BigDecimal getBookingCost() {
+		return bookingCost;
+	}
+
+	public void setBookingCost(BigDecimal bookingCost) {
+		this.bookingCost = bookingCost;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}	
-	
+	}
+
 }
