@@ -26,7 +26,7 @@ public class PetOwner {
 	@Column(name="telephone_number")
 	private String telephoneNumber;
 
-	@OneToMany(mappedBy = "petOwner",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(mappedBy = "petOwner",cascade = {CascadeType.ALL})
 	private List<Pet> pet = new ArrayList<Pet>();
 
 	@OneToMany(mappedBy="petOwnerId",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
