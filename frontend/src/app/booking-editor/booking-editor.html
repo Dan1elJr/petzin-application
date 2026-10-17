@@ -26,7 +26,7 @@
       Tutor não cadastrado</label
     >
   </div>
-  <div *ngIf="mode === 'existing'" class="mb-3">
+  <div *ngIf="mode === 'existing'" class="mb-3 position-relative">
     <label for="searchOwner" class="form-label">Pesquisar tutor</label>
     <input
       id="searchOwner"
@@ -34,15 +34,24 @@
       [(ngModel)]="query"
       (ngModelChange)="clearOwner()"
       placeholder="Nome, telefone ou código"
+      autocomplete="off"
+      aria-controls="ownerSuggestions"
     />
-    <div *ngIf="!selectedOwner">
-      <p *ngFor="let owner of matches()">
-        {{ owner.name }} · {{ owner.telephoneNumber }}
-        <button type="button" class="btn btn-sm btn-secondary" (click)="loadOwner(owner.id!)">
-          Validar tutor
-        </button>
-      </p>
-      <p *ngIf="query.trim() && !matches().length">Nenhum tutor encontrado.</p>
+    <div
+      *ngIf="query.trim() && !selectedOwner"
+      id="ownerSuggestions"
+      class="dropdown-menu show w-100"
+      aria-label="Tutores encontrados"
+    >
+      <button
+        *ngFor="let owner of matches()"
+        type="button"
+        class="dropdown-item text-wrap"
+        (click)="loadOwner(owner.id!)"
+      >
+        {{ owner.name }} · {{ owner.telephoneNumber }} · {{ owner.id }}
+      </button>
+      <p *ngIf="!matches().length" class="dropdown-item-text mb-0" role="status">Nenhum tutor encontrado.</p>
     </div>
   </div>
   <app-pet-owner-form *ngIf="mode === 'new' && !selectedOwner" (saved)="ownerSaved($event)" />
