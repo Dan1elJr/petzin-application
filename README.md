@@ -187,6 +187,39 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
     "kannel": 5
     }
 
+#### Relacionamentos atuais — 1:N
+
+- **Tutor → Pet (1:N):** um tutor pode ter vários pets. Cada pet pertence a um único tutor.
+- **Tutor → Reserva (1:N):** um tutor pode ter várias reservas. Cada reserva está associada a, no máximo, um tutor.
+- **Pet → Reserva (1:N):** um pet pode ter várias reservas ao longo do tempo. Cada reserva contém um único pet.
+
+```mermaid
+erDiagram
+    TUTOR ||--o{ PET : possui
+    TUTOR |o--o{ RESERVA : realiza
+    PET ||--o{ RESERVA : participa
+
+    TUTOR {
+        inteiro id
+        texto nome
+        texto telefone
+    }
+
+    PET {
+        inteiro id
+        texto nome
+        texto raca
+    }
+
+    RESERVA {
+        inteiro id
+        data entrada
+        data saida
+        decimal valor
+        inteiro numero_canil
+    }
+```
+
     Vantagem: 
 
     A principal vantagem é que o JSON atual liga a reserva aos cadastros do tutor e do pet pelos IDs, sem repetir seus dados.
