@@ -58,7 +58,7 @@
 </fieldset>
 <form *ngIf="selectedOwner" #bookingForm="ngForm" (ngSubmit)="bookingForm.valid && save()">
   <fieldset [disabled]="busy">
-    <p>Tutor: {{ selectedOwner.name }}</p>
+    <p><strong>Tutor: {{ selectedOwner.name }}</strong></p>
     <label for="bookingPet" class="form-label">Animal</label>
     <select
       id="bookingPet"
