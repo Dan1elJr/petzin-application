@@ -1,4 +1,4 @@
-<h1 class="h3">Agendamento</h1>
+<h1 class="h3">Agendar</h1>
 <p *ngIf="error" class="text-danger" role="alert">{{ error }}</p>
 <p *ngIf="loading">Carregando...</p>
 <fieldset [disabled]="busy">
@@ -33,7 +33,7 @@
       class="form-control"
       [(ngModel)]="query"
       (ngModelChange)="clearOwner()"
-      placeholder="Nome, telefone ou código"
+      placeholder="Digite o nome do tutor ou telefone"
       autocomplete="off"
       aria-controls="ownerSuggestions"
     />
@@ -97,12 +97,13 @@
         />
       </div>
       <div class="col-md-3">
-        <label for="cost" class="form-label">Valor pago (R$)</label
+        <label for="cost" class="form-label">Valor a pagar (R$)</label
         ><input
           id="cost"
           name="bookingCost"
           type="number"
           class="form-control"
+          placeholder="Digite o valor a pagar"
           [(ngModel)]="booking.bookingCost"
           step="0.01"
         />
@@ -114,6 +115,7 @@
           name="kannel"
           type="number"
           class="form-control"
+          placeholder="Digite o número do canil"
           [(ngModel)]="booking.kannel"
           step="1"
         />

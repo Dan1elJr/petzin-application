@@ -7,6 +7,7 @@
         id="ownerName"
         name="ownerName"
         class="form-control"
+        placeholder="Digite o nome do tutor"
         [(ngModel)]="owner.name"
         required
       />
@@ -18,6 +19,7 @@
         name="telephone"
         type="tel"
         class="form-control"
+        placeholder="Digite o telefone do tutor"
         [(ngModel)]="owner.telephoneNumber"
         required
         autocomplete="tel"
@@ -41,6 +43,7 @@
             [id]="'petName' + i"
             [name]="'petName' + i"
             class="form-control"
+            placeholder="Digite o nome do animal"
             [(ngModel)]="pet.petName"
             required
           />
@@ -51,6 +54,7 @@
             [id]="'petBreed' + i"
             [name]="'petBreed' + i"
             class="form-control"
+            placeholder="Digite a raça do animal"
             [(ngModel)]="pet.petBreed"
             required
           />

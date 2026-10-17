@@ -1,5 +1,4 @@
-<h1 class="h3">Agendamentos</h1>
-<a routerLink="/bookings/new" class="btn btn-primary mb-3">Novo agendamento</a>
+<h1 class="h3">Lista de agendamentos</h1>
 <p *ngIf="error" class="text-danger" role="alert">{{ error }}</p>
 <p *ngIf="loading">Carregando...</p>
 <button *ngIf="error && !loading" class="btn btn-secondary mb-3" (click)="load()">
@@ -7,7 +6,7 @@
 </button>
 <div *ngIf="!loading">
   <label for="search" class="form-label">Pesquisar</label
-  ><input id="search" class="form-control mb-3" [(ngModel)]="query" />
+  ><input id="search" class="form-control mb-3" [(ngModel)]="query" placeholder="Digite o nome do tutor ou animal" />
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -15,7 +14,7 @@
           <th scope="col">Animal / tutor</th>
           <th scope="col">Entrada</th>
           <th scope="col">Saída</th>
-          <th scope="col">Valor pago</th>
+          <th scope="col">Valor a pagar</th>
           <th scope="col">Canil</th>
           <th scope="col">Ações</th>
         </tr>
