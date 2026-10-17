@@ -70,7 +70,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     Preencha assim, trocando a senha de exemplo por uma senha sua:
 
-    ```dotenv
+    
     POSTGRES_DB=petzin_webservice
     POSTGRES_USER=petzin
     POSTGRES_PASSWORD=defina_uma_senha_local
@@ -78,7 +78,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
     BACKEND_PORT=8080
     SPRING_JPA_HIBERNATE_DDL_AUTO=update
     SPRING_JPA_SHOW_SQL=true
-    ```
+   
 
     Salve com **Ctrl+S** e feche o editor. O nome precisa ser `.env`, sem `.txt` no final. Não deixe usuário e senha vazios.
 
