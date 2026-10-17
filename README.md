@@ -72,7 +72,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     
     POSTGRES_DB=petzin_webservice
-    POSTGRES_USER=defina_uma_senha_local
+    POSTGRES_USER=defina_um_usuario_local
     POSTGRES_PASSWORD=defina_uma_senha_local
     FRONTEND_PORT=3000
     BACKEND_PORT=8080
