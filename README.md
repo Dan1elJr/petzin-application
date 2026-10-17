@@ -2,11 +2,11 @@
 
 Sistema para cadastrar tutores, pets e reservas de hospedagem. A ideia é substituir as planilhas e deixar os dados de cada animal separados.
 
-# Como rodar o projeto
+## Como rodar o projeto
 
 O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisar de internet para baixar o programa e as dependências na primeira execução.
 
-1. Instale o Docker Desktop
+### 1. Instale o Docker Desktop
 
     Baixe o instalador na [página do Docker Desktop para Windows](https://docs.docker.com/desktop/setup/install/windows-install/) e siga a instalação. Se aparecer a opção **Use WSL 2**, deixe marcada. Se pedir para instalar ou atualizar esse recurso do Windows, siga as instruções e reinicie quando solicitado.
 
@@ -14,7 +14,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     Não precisa instalar Java, Node.js, Maven ou PostgreSQL separadamente. O Docker prepara essas ferramentas para o projeto.
 
-2. Baixe o código
+### 2. Baixe o código
 
     No repositório do projeto, clique em **Code → Download ZIP**. Depois, clique com o botão direito no arquivo baixado e escolha **Extrair Tudo**.
 
@@ -29,7 +29,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     Essa é a pasta onde os comandos devem ser executados. Extraia o ZIP antes de continuar.
 
-3. Abra o PowerShell nessa pasta
+### 3. Abra o PowerShell nessa pasta
 
     3.1. No Explorador de Arquivos, abra a pasta onde está o `compose.yaml`.
     3.2 Segure **Shift** e clique com o **botão direito em uma área vazia**, sem selecionar um arquivo.
@@ -56,7 +56,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     O primeiro mostra a versão do Compose. O segundo deve mostrar as informações do Docker sem erro de conexão.
 
-4. Configure o banco
+### 4. Configure o banco
 
     Na mesma janela do PowerShell, execute:
 
@@ -82,7 +82,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     Salve com **Ctrl+S** e feche o editor. O nome precisa ser `.env`, sem `.txt` no final. Não deixe usuário e senha vazios.
 
-5. Inicie o projeto
+### 5. Inicie o projeto
 
     No PowerShell aberto na pasta do projeto, execute:
 
@@ -106,13 +106,13 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     Você também pode acompanhar os serviços no Docker Desktop, em **Containers**, dentro do grupo `petzin`.
 
-6. Acesse o sistema
+### 6. Acesse o sistema
 
     Abra o navegador em **http://localhost:3000**.
 
     Cadastre um tutor e um pet. Depois, abra o agendamento, selecione o tutor e o animal, informe as datas, o valor e o canil. A saída precisa ser depois da entrada. Salve e confira a reserva na lista.
 
-7. Pare ou inicie novamente
+### 7. Pare ou inicie novamente
 
     Use o PowerShell na pasta do `compose.yaml`. Para abrir outra janela, repita o passo 3: **Shift + botão direito em uma área vazia da pasta → Abrir janela do PowerShell aqui ou Abrir no Terminal**.
 
@@ -134,16 +134,16 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     A senha do banco é definida quando ele é criado pela primeira vez. Trocar a senha só no `.env` não muda a senha de um banco que já existe.
 
-    # Se der erro
+### Se der erro
 
     - **Docker não conecta:** abra o Docker Desktop, espere iniciar e tente `docker info` novamente.
     - **Não encontra o Compose:** reabra o PowerShell na pasta do `compose.yaml`, pelo botão direito, como no passo 3.
     - **Porta ocupada:** troque `FRONTEND_PORT` para `3001` ou `BACKEND_PORT` para `8081`, conforme o erro. Execute `docker compose up -d` e use a nova porta no endereço do navegador.
 
 
-###### TECNOLOGIAS UTILIZADAS E ANÁLISE DA APLICAÇÃO
+## TECNOLOGIAS UTILIZADAS E ANÁLISE DA APLICAÇÃO
 
-# Tecnologias utilizadas
+### Tecnologias utilizadas
 
     - **Java versão 17 e Spring Boot:** para criar a API e organizar as operações, validações e erros, com biblioteca Junit para testes.
     - **Spring Data JPA e Hibernate:** para consultar e salvar os dados sem repetir o código de acesso ao banco.
@@ -153,23 +153,23 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
     - **Springdoc OpenAPI:** para documentar e testar a API pelo Swagger.
     - **Docker Compose e Nginx:** para executar o projeto completo e servir a interface com acesso ao backend.
 
-# Análise do problema
+### Análise do problema
 
     O modelo original coloca o tutor, os pets e a reserva no mesmo registro. Isso repete informações e dificulta atualizar os dados. Guardar `Rex e Bolinha` no mesmo campo também impede identificar cada animal de forma confiável.
 
-# Mudança de telefone do Carlos
+### Mudança de telefone do Carlos
 
     Se o telefone estiver em cada reserva, seria necessário alterar todas elas quando Carlos mudasse de número. Se alguma fosse esquecida, ele teria contatos diferentes no sistema.
 
     Separei os dados do tutor em um cadastro próprio. Assim, o telefone é alterado uma vez, e as reservas continuam ligadas ao mesmo tutor pelo ID. O sistema usa o contato atual; não guarda uma cópia do telefone de cada hospedagem.
 
-# Histórico do Rex
+### Histórico do Rex
 
     Cada pet tem seu próprio cadastro e ID. Rex e Bolinha ficam separados, mesmo sendo do mesmo tutor. Isso também permite distinguir animais com nomes iguais.
 
     O histórico médico ainda não foi feito. Para adicionar essa função, cada atendimento teria o ID do pet, a data e a descrição. Assim, a busca pelo ID do Rex retornaria somente os registros dele.
 
-# Como os dados ficaram no modelo corrigdo
+### Como os dados ficaram no modelo corrigdo
 
     - `pet_owner`: ID, nome e telefone do tutor.
     - `pet`: ID, nome, raça e ID do tutor.
@@ -203,7 +203,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     Para juntar vários pets em uma reserva, seria necessário criar uma tabela `reserva_pets`, como sugerido no documento de apoio. Ela ligaria a reserva aos animais. Também seria preciso ajustar a API, a interface e a forma de cobrar o valor do grupo.
 
-# API e validações
+### API e validações
 
     A API permite cadastrar, consultar, atualizar e excluir tutores, pets e reservas em `/api/owners`, `/api/pets` e `/api/bookings`.
 
@@ -211,7 +211,7 @@ O passo a passo abaixo é para Windows, usando Docker Desktop. Você vai precisa
 
     Os erros são tratados em um lugar só: `400` para dados inválidos, `404` para cadastros procurados e não encontrados, `409` para problemas de integridade e `500` para falhas inesperadas. Ao salvar um vínculo com um registro inexistente, o banco pode rejeitar a operação e a API retornar `409`.
 
-# Alguns pontos a evoluir na aplicação
+### Alguns pontos a evoluir na aplicação
 
     - Validar no backend se o pet da reserva pertence ao tutor informado. Hoje, esse filtro é feito na interface.
     - Controlar a disponibilidade dos canis.
